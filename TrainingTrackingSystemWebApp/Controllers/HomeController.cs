@@ -15,6 +15,7 @@ namespace TrainingTrackingSystemWebApp.Controllers
 
         public ActionResult About()
         {
+            // adding a comment
             ViewBag.Message = "Your application description page.";
 
             return View();
