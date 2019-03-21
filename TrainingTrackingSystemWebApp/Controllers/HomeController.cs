@@ -20,7 +20,7 @@ namespace TrainingTrackingSystemWebApp.Controllers
             public string Email { get; set; }
             public int Type { get; set; }
         }
-        //jhsj
+       
         public ActionResult Index()
         {
             UsersIndexViewModel viewModel = new UsersIndexViewModel();
