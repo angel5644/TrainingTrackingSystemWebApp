@@ -11,6 +11,10 @@
     <option value="lastName">Last Name</option>
 </select>
 <input type="text" id="search-value" />
+<select id="order-type">
+    <option value="asc">Ascending</option>
+    <option value="desc">Descending</option>
+</select>
 
 <table>
     <thead>
@@ -21,7 +25,7 @@
             <th>Type</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="users-data">
         @foreach (var user in Model.Users)
         {
             <tr>
@@ -31,7 +35,6 @@
                 <td>@user.Type</td>
             </tr>
         }
-
     </tbody>
 </table>
 
@@ -40,29 +43,53 @@
 @section scripts{
     <script type="text/javascript">
         $("#search-value").on("keyup", "", function () {
-            console.log("We should filter the results here. Value: " + $(this).val());
+            //console.log("We should filter the results here. Value: " + $(this).val());
 
             var searchField = $("#search-field").val();
             var searchValue = $(this).val();
+            var orderType = $("#order-type").val();
 
-            findUsers(searchField, searchValue);
+            findUsers(searchField, searchValue, orderType);
         })
 
-        function findUsers(searchField, searchValue) {
+        $("#order-type").on("change", "", function () {
+            var searchField = $("#search-field").val();
+            //var searchValue = $(this).val();
+            var orderType = $(this).val();
+
+            findUsers(searchField, "", orderType);
+        })
+
+        function findUsers(searchField, searchValue, orderType) {
 
             $.ajax({
                 url: "/Home/FindUsers",
                 data: {
                     searchField: searchField,
-                    searchValue: searchValue
+                    searchValue: searchValue,
+                    orderType: orderType
                 },
                 contentType: "application/json",
                // type: "GET",
                 dataType: "json",
             })
                 .done(function (data) {
-                    console.log("Filtered data: ");
-                    console.log(data.data);
+                    
+                    var $tableData = $("#users-data");
+                    $tableData.html("");
+                    
+                    $.each(data.data, function (index, user) {
+                        
+
+                        var element = "<tr>";
+                        element += "<td>" + user.FirstName + "</td>";
+                        element += "<td>" + user.LastName + "</td>";
+                        element += "<td>" + user.Email + "</td>";
+                        element += "<td>" + user.Type + "</td>";
+                        element += "</tr>";
+
+                        $tableData.append(element);
+                    })
                 })
                 .fail(function (jqXHR) {
                     console.log(jqXHR.responseText);
