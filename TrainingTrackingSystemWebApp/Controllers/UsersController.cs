@@ -22,22 +22,23 @@ namespace TrainingTrackingSystemWebApp.Controllers
                 data.FirstName = "Carlos Omar";
                 data.LastName = "Sanchez Solorzano";
                 data.Email = "mikol1326@gmail.com";
-                data.Type = 1;
-                return View("EditUser", data);
+                data.Type = (UserType)2;
+
+                return View(data);
             }
             else
             {
-                return View("EditUser",data);
+                return View(data);
             }
         }
-        [HttpPut]
-        public ActionResult Update(EditUserViewModel user)
+        [HttpPost]
+        public ActionResult Edit(EditUserViewModel user)
         {
             string userJson = JsonConvert.SerializeObject(user);
 
             Console.WriteLine(userJson);
 
-            return View("List");
+            return View();
         }
     }
 }

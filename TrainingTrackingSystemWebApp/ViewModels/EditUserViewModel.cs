@@ -8,13 +8,18 @@ namespace TrainingTrackingSystemWebApp.ViewModels
 {
     public class EditUserViewModel
     {
+        [Display(Name = "First Name")]
         [Required]
         public string FirstName { get; set; }
         [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
         [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+        [Display(Name = "Email")]
         [Required]
-        public int Type { get; set; }
+        public string Email { get; set; }
+        [Display(Name = "Type")]
+        [Required]
+        public UserType  Type  { get; set; }
     }
 }

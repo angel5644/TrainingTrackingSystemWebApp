@@ -5,47 +5,50 @@
 <h2>EditUser</h2>
 <div class="container-fluid">
     <div class="container">
-        <form action="~/Users/Update/" method="post">
-            <div class="form-row">
-                <div class="col-md-4 mb-3">
-                    <label for="validationServer01">First name</label>
-                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control is-valid", @placeholder = "First Name" , required ="true"})
-                    <div class="valid-feedback">
-                        Looks good!
+        @*@using (Html.BeginForm("Update", "Users", FormMethod.Post))
+        {*@
+            <form  action="~/Users/Update" method="post">
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="validationServer01">First name</label>
+                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control is-valid", @placeholder = "First Name", required = "true" })
+                        <div class="validation">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="validationServer02">Last name</label>
+                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control is-valid", @placeholder = "Last Name", required = "true" })
+                        @*<input type="text" class="form-control is-valid" id="validationServer02" placeholder="Last name" value="@Model.LastName" required>*@
+                        <div class="validation">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="validationServerUsername">Email</label>
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control is-valid", @placeholder = "Email", required = "true" })
+                        @*<input type="text" class="form-control is-valid" id="validationServerUsername" placeholder="Email" aria-describedby="inputGroupPrepend3" value="@Model.Email" required>*@
+                        <div class="validation">
+                            Please choose a username.
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <label for="validationServer02">Last name</label>
-                    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control is-valid", @placeholder = "Last Name", required = "true" })
-                    @*<input type="text" class="form-control is-valid" id="validationServer02" placeholder="Last name" value="@Model.LastName" required>*@
-                    <div class="valid-feedback">
-                        Looks good!
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="validationServer03">Type</label>
+                        <select class="form-control" id="Type" name="Type" required>
+                            <option value="0">Trainee</option>
+                            <option value="1">Trainer</option>
+                            <option value="2">Admin</option>
+                        </select>
+                        <div class="validation">
+                            Please provide a valid city.
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <label for="validationServerUsername">Email</label>
-                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control is-valid", @placeholder = "Email", required = "true" })
-                    @*<input type="text" class="form-control is-valid" id="validationServerUsername" placeholder="Email" aria-describedby="inputGroupPrepend3" value="@Model.Email" required>*@
-                    <div class="invalid-feedback">
-                        Please choose a username.
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
-                    <label for="validationServer03">Type</label>
-                    <select class="form-control" id="opciones" required>
-                        <option value="0">Trainee</option>
-                        <option value="1">Trainer</option>
-                        <option value="2">Admin</option>
-                    </select>
-                    <div class="invalid-feedback">
-                        Please provide a valid city.
-                    </div>
-                </div>
-            </div>
-            <button class="btn btn-primary" type="submit">Update</button>
-        </form>
-    </div>
+                <button class="btn btn-primary" type="submit">Update</button>
+            </form>
+        @*}*@
+        </div>
 </div>
 
