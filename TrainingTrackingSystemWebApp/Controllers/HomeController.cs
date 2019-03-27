@@ -1,18 +1,23 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using TrainingTrackingSystemWebApp.DTO;
+using TrainingTrackingSystemWebApp.Models;
+using TrainingTrackingSystemWebApp.Utils;
+using TrainingTrackingSystemWebApp.ViewModels;
 
 namespace TrainingTrackingSystemWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public class UsersIndexViewModel
-        {
-            public List<UserViewModel> Users { get; set; }
-        }
-
         public class UserViewModel
         {
             public string FirstName { get; set; }
@@ -20,31 +25,28 @@ namespace TrainingTrackingSystemWebApp.Controllers
             public string Email { get; set; }
             public int Type { get; set; }
         }
-       
-        public ActionResult Index()
+
+        private HttpClientUtils clientUtils;
+
+        public HomeController()
+        {
+            clientUtils = new HttpClientUtils("https://my-json-server.typicode.com/angel5644/UsersJsonData/");
+        }
+
+        public async Task<ActionResult> Index()
         {
             UsersIndexViewModel viewModel = new UsersIndexViewModel();
 
-            // Call rest service
-            viewModel.Users = new List<UserViewModel>()
-            {
-                new UserViewModel()
-                {
-                    FirstName = "Victor",
-                    LastName = "Leon"
-                },
-                new UserViewModel()
-                {
-                    FirstName = "Eder",
-                    LastName = "Leon"
-                },
-            };
+            var users = await clientUtils.Get("users");
+
+            viewModel.Users = users;
 
             return View("Index", viewModel);
+
         }
 
         [HttpGet]
-        public JsonResult FindUsers(string searchField, string searchValue, string orderType)
+        public async Task<JsonResult> FindUsers(string searchField, string searchValue, string orderType)
         {
             // Call rest service to filter users
             List<UserViewModel> usersFiltered = new List<UserViewModel>()
