@@ -44,7 +44,7 @@ namespace TrainingTrackingSystemWebApp.Controllers
         }
 
         [HttpGet]
-        public JsonResult FindUsers(string searchField, string searchValue)
+        public JsonResult FindUsers(string searchField, string searchValue, string orderType)
         {
             // Call rest service to filter users
             List<UserViewModel> usersFiltered = new List<UserViewModel>()
