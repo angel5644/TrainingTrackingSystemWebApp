@@ -18,14 +18,6 @@ namespace TrainingTrackingSystemWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public class UserViewModel
-        {
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string Email { get; set; }
-            public int Type { get; set; }
-        }
-
         private HttpClientUtils clientUtils;
 
         public HomeController()

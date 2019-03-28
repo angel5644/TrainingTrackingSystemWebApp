@@ -17,14 +17,30 @@ th {
     color: white;
 }
 
-.containerTable{
+.containerTable {
     padding-top: 20px;
 }
+
 input[type=text] {
     width: 100%;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    padding-left: 10px;
 }
 
+.containerOptions {
+    float: left;
+    width: 75%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.containerCreateUser {
+    float: left;
+    width: 25%;
+    text-align: right;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
