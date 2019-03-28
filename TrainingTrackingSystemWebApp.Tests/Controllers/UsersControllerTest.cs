@@ -68,7 +68,7 @@ namespace TrainingTrackingSystemWebApp.Tests.Controllers
             UsersController controller = new UsersController();
 
             //Act
-            ViewResult result = controller.CreateUser() as ViewResult;
+            ViewResult result = controller.Create() as ViewResult;
 
             //Assert
             Assert.IsNotNull(result);
@@ -82,7 +82,7 @@ namespace TrainingTrackingSystemWebApp.Tests.Controllers
             UsersController controller = new UsersController();
 
             //Act
-            var result = (RedirectToRouteResult)controller.Create(CreateUserVM);
+            var result = (RedirectToRouteResult)controller.CreateUsr(CreateUserVM);
 
             result.RouteValues["action"].Equals("Index");
             result.RouteValues["controller"].Equals("Home");

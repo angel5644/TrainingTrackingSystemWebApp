@@ -8,6 +8,7 @@ namespace TrainingTrackingSystemWebApp.ViewModels
 {
     public class createUserVM
     {
+        public int Id { get; set; }
         [Required]
         [Display(Name = "Name")]
         public string FirstName { get; set; }
