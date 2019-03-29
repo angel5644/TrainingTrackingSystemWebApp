@@ -7,7 +7,9 @@ using System.Web;
 namespace TrainingTrackingSystemWebApp.ViewModels
 {
     public class EditUserViewModel
-    {
+    {   
+        [Required]
+        public int Id { get; set; }
         [Display(Name = "First Name")]
         [Required]
         public string FirstName { get; set; }
