@@ -46,12 +46,13 @@ namespace TrainingTrackingSystemWebApp.Utils
             }
         }
 
-        public async Task<List<UserDTO>> Get(string endPoint)
+        public async Task<List<UserDTO>> Get(string endPoint, string searchField, string searchValue, string orderBy, string orderType, int pageNo, int numberRec)
         {
             // endpoint = users
             // userId = 1
+            // pageNo = 1
             // posts?userId=1
-            string url = endPoint;
+            string url = string.Format("{0}?searchField={1}&searchValue={2}&orderBy={3}&orderType={4}&pageNo={5}&numberRec={6}", endPoint, searchField, searchValue, orderBy, orderType, pageNo, numberRec);
 
             HttpResponseMessage response = await _client.GetAsync(url);
 
@@ -72,6 +73,8 @@ namespace TrainingTrackingSystemWebApp.Utils
 
             return null;
         }
+
+
     }
 
 }

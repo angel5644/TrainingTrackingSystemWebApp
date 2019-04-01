@@ -29,7 +29,7 @@ namespace TrainingTrackingSystemWebApp.Controllers
         {
             UsersIndexViewModel viewModel = new UsersIndexViewModel();
 
-            var users = await clientUtils.Get("users");
+            var users = await clientUtils.Get("users", "", "", "LastName", "asc", 1, 10);
 
             viewModel.Users = users;
 
@@ -38,7 +38,7 @@ namespace TrainingTrackingSystemWebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> FindUsers(string searchField, string searchValue, string orderType)
+        public async Task<JsonResult> findUsers(string searchField, string searchValue, string orderType)
         {
             // Call rest service to filter users
             List<UserViewModel> usersFiltered = new List<UserViewModel>()

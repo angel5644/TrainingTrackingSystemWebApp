@@ -6,29 +6,33 @@
 
 
 <div>
-
     <h1>Users List</h1>
 
-    <div class="containerOptions">
-        <input type="text" id="search-value" placeholder="Search..."/>
+    <div class="containerSearch">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input type="text" id="search-value" placeholder="Search..." />
+        </div>
+    </div>
 
-        <b>Search By:</b>
-        <select id="search-field">
-            <option value="firstName">First Name</option>
-            <option value="lastName">Last Name</option>
-        </select>
+    <div class="containerSearchBy">
+            <b>Search By:</b>
+            <select id="search-field">
+                <option value="firstName">First Name</option>
+                <option value="lastName">Last Name</option>
+            </select>
+    </div>
 
-        <b>Order By:</b>
-        <select id="order-type">
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-        </select>
+    <div class="containerOrderBy">
+            <b>Order By:</b>
+            <select id="order-type">
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+            </select>     
     </div>
 
     <div class="containerCreateUser">
-
-        <a href="">Create User</a>
-
+        <a href=""><span class="glyphicon glyphicon-user"></span> Create User</a>
     </div>
 
 </div>
@@ -55,7 +59,7 @@
                     <td>@user.email</td>
                     <td>@user.type</td>
                     <td>
-                        <a href="">Edit</a> |
+                        <a href="">Update</a> |
                         <a href="">Details</a> |
                         <a href="">Delete</a>
                     </td>
@@ -64,10 +68,19 @@
         </tbody>
 
     </table>
+
+    <div>
+        <ul class="pager">
+            <li class="previous"><a href="#">Previous</a></li>
+            <li class="next"><a href="#">Next</a></li>
+        </ul>
+    </div>
 </div>
 
 @section styles{
+<link href="~/Content/Styles/Index.css" rel="stylesheet" />
     <link href="~/Content/Index.css" rel="stylesheet" />
+
 }
 
 @section scripts{

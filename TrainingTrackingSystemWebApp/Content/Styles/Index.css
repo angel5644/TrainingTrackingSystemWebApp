@@ -18,40 +18,47 @@ th {
 }
 
 .containerTable {
-    padding-top: 20px;
+    padding-top: 80px;
 }
 
-#search-value{
+input[type=text] {
     width: 100%;
     box-sizing: border-box;
     border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    padding-left: 5px;
-    padding-right: 5px;
+    border-radius: 2px;
+    font-size: 18px;
+    padding-left: 10px;
 }
 
-select {
-    font-size: 16px;
-    border-radius: 4px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.containerOptions {
+.containerSearch {
     float: left;
-    width: 80%;
+    width: 30%;
     padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
+    
+}
+
+.containerSearchBy {
+    float: left;
+    width: 20%;
+    padding-top: 20px; 
+    font-size: 16px;
+}
+
+.containerOrderBy {
+    float: left;
+    width: 20%;
+    padding-top: 20px;
+    font-size: 16px;
 }
 
 .containerCreateUser {
     float: left;
-    width: 20%;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-right: 20px;
+    width: 30%;
     text-align: right;
+    font-size: 16px;
+    padding-top: 20px;
     
+}
+.input-group-addon {
+    width: 20px;
 }
