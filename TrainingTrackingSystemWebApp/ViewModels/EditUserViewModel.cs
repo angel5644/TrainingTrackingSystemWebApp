@@ -5,10 +5,10 @@ using System.Linq;
 using System.Web;
 
 namespace TrainingTrackingSystemWebApp.ViewModels
+
 {
     public class EditUserViewModel
-    {   
-        [Required]
+    {           [Required]
         public int Id { get; set; }
         [Display(Name = "First Name")]
         [Required]
@@ -22,6 +22,6 @@ namespace TrainingTrackingSystemWebApp.ViewModels
         public string Email { get; set; }
         [Display(Name = "Type")]
         [Required]
-        public UserType  Type  { get; set; }
+        public UserType Type  { get; set; }
     }
 }

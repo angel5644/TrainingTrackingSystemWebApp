@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using NUnit;
 
 namespace TrainingTrackingSystemWebApp.Controllers
 {
@@ -12,7 +13,7 @@ namespace TrainingTrackingSystemWebApp.Controllers
         public ActionResult Index()
         {
             return View();
-        }
+        } 
 
         public ActionResult About()
         {

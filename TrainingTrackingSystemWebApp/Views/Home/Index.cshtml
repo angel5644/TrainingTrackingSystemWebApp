@@ -1,5 +1,12 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+
+    string errorMessage = TempData["Message"] != null ? (string)TempData["Message"] : string.Empty;
+}
+
+@if(errorMessage != "")
+{
+    <div class="alert alert-danger">@errorMessage</div>
 }
 
 <div class="jumbotron">

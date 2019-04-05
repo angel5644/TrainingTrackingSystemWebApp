@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using TrainingTrackingSystemWebApp.DTOs;
+using TrainingTrackingSystemWebApp.ViewModels;
 
 namespace TrainingTrackingSystemWebApp.Utils
 {
@@ -14,5 +16,7 @@ namespace TrainingTrackingSystemWebApp.Utils
         {
             get;
         }
+        Task<UserDTO> GetUser(string endPoint, int Id);
+        Task<UserDTO> Put(string v, UserDTO userDTO);
     }
 }

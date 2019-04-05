@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -15,14 +16,18 @@ using TrainingTrackingSystemWebApp.ViewModels;
 
 namespace TrainingTrackingSystemWebApp.Controllers
 {
-   
     public class UsersController : Controller
     {
-        private HttpClientUtils clientUtils;
+        private IHttpClientUtils clientUtils;
 
-        public  UsersController()
+        public UsersController()
         {
-            clientUtils = new HttpClientUtils("https://my-json-server.typicode.com/angel5644/UsersJsonData/Users/");
+            clientUtils = new HttpClientUtils("https://my-json-server.typicode.com/angel5644/UsersJsonData/");
+        }
+
+        public UsersController(IHttpClientUtils httpClientUtils)
+        {
+            clientUtils = httpClientUtils;
         }
 
         //get the user to update
@@ -31,25 +36,35 @@ namespace TrainingTrackingSystemWebApp.Controllers
         {
             EditUserViewModel editUserVM = new EditUserViewModel();
 
-            var user = await clientUtils.GetUser(Id);
+            UserDTO userDTO = await clientUtils.GetUser("users", Id);
 
-            editUserVM.Id = user.id;
-            editUserVM.FirstName = user.first_name;
-            editUserVM.LastName = user.last_name;
-            editUserVM.Email = user.email;
-            editUserVM.Type = (UserType)user.type;
+            if (userDTO == null) {
+                TempData["Message"] = "The user does not exist";
+                return RedirectToAction("Index", "Home");
+            }
+
+            editUserVM.Id = userDTO.id;
+            editUserVM.FirstName = userDTO.first_name;
+            editUserVM.LastName = userDTO.last_name;
+            editUserVM.Email = userDTO.email;
+            editUserVM.Type = (UserType)userDTO.type;
 
             return View(editUserVM);
         }
 
         [HttpPost]
-        public ActionResult Edit(EditUserViewModel user)
+        public async Task<ActionResult> Edit(EditUserViewModel user)
         {
             string userJson = JsonConvert.SerializeObject(user);
 
+            // var response = await clientUtils.Put("users", userDTO);
+
             Console.WriteLine(userJson);
 
-            return View();
+            if (Response.StatusCode >= 200 && Response.StatusCode <= 299) //Status ok
+                return View();
+            else 
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //Bad request
         }
     }
 }
