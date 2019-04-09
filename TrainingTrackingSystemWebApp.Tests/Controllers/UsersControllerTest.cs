@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Web.Mvc;
 using TrainingTrackingSystemWebApp.Controllers;
 using TrainingTrackingSystemWebApp.ViewModels;
+using System.Threading.Tasks;
 
 namespace TrainingTrackingSystemWebApp.Tests.Controllers
 {
@@ -75,14 +76,14 @@ namespace TrainingTrackingSystemWebApp.Tests.Controllers
         }
 
         [TestMethod]
-        public void Create()
+        public async Task Create()
         {
             var CreateUserVM = new createUserVM();
             //Arrange
             UsersController controller = new UsersController();
 
             //Act
-            var result = (RedirectToRouteResult)controller.CreateUsr(CreateUserVM);
+            var result = await controller.CreateUser(CreateUserVM) as RedirectToRouteResult;
 
             result.RouteValues["action"].Equals("Index");
             result.RouteValues["controller"].Equals("Home");

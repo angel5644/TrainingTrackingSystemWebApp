@@ -25,6 +25,17 @@ namespace TrainingTrackingSystemWebApp.Controllers
             clientUtils = httpClientUtils;
         }
 
+        public async Task<ActionResult> Index()
+        {
+            UsersIndexViewModel viewModel = new UsersIndexViewModel();
+
+            var users = await clientUtils.Get("users");
+
+            viewModel.Users = users;
+
+            return View("Index", viewModel);
+        }
+
         // GET: Users
         public ActionResult Create()
         {

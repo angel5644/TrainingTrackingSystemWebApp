@@ -1,1 +1,81 @@
-﻿<h1>Creado.</h1>
+﻿@model TrainingTrackingSystemWebApp.ViewModels.UsersIndexViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+
+    string errorMessage = TempData["Message"] != null ? (string)TempData["Message"] : string.Empty;
+}
+
+@if(errorMessage != "")
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+
+
+<div class="title">
+    <h1>Users List</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a href="/Users/Create" class="btn btn-default">Create</a>
+    </div>
+</div>
+
+<div class="containerTable">
+    <table id="table_id" class="table table-striped table-bordered" style="width:100%">
+
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Type</th>
+                <th> </th>
+            </tr>
+        </thead>
+
+        <tbody id="users-data">
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.first_name</td>
+                    <td>@user.last_name</td>
+                    <td>@user.email</td>
+                    <td>@user.type</td>
+                    <td>
+                        <a href="/Users/Edit/@(user.id)">Update</a> |
+                        <a href="/Users/Details/@(user.id)">Details</a> |
+                        <a href="#">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+
+@section styles{
+    <link href="~/Content/Styles/Index.css" rel="stylesheet" />
+    <link href="~/Content/Index.css" rel="stylesheet" />
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css " />
+}
+
+@section scripts{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.3.1.js "></script>
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js "></script>
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js "></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+
+}
