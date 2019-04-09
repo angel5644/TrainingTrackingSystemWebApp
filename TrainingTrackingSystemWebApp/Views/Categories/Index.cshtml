@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    string successMessage = TempData["Success"] != null ? (string)TempData["Success"] : string.Empty;
+}
+
+@if (successMessage != "")
+{
+    <div class="alert alert-success">@successMessage</div>
+}
+
+<h2>Index</h2>
+

@@ -1,0 +1,57 @@
+﻿@model TrainingTrackingSystemWebApp.ViewModels.Categories.CreateCategoryViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create  a new categy</h2>
+
+@using (Html.BeginForm("Create", "Categories", FormMethod.Post))
+{
+    <div class="form-group">
+        <label for="Name">Name</label>
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Enter a name" })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class ="text-danger" })
+        <br />
+        @*<input required maxlength="50" type="text" class="form-control" id="Name" name="Name" aria-describedby="nameHelp" placeholder="Enter name">*@
+        <small id="nameHelp" class="form-text text-muted">This field is required.</small>
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        <br />
+        @*<textarea maxlength="500" rows="8" class="form-control" id="Description" name="Description" aria-describedby="descriptionHelp"> </textarea>*@
+        <small id="nameHelp" class="form-text text-muted">This field is optional.</small>
+    </div>
+    <br />
+    <input type="submit" class="btn btn-primary" value="Create" />
+}
+@*<form method="post" action="/users/create">
+
+
+    <div class="form-group">
+        <label for="Name">Name</label>
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Enter a name" })
+        <small id="nameHelp" class="form-text text-muted">This field is required.</small>
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+        <small id="nameHelp" class="form-text text-muted">This field is optional.</small>
+    </div>
+    <br />
+
+    <input type="submit" class="btn btn-primary" value="Create" />
+</form>*@
+
+@section Scripts{
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @*<script src="~/Scripts/jquery.validate.min.js"></script>*@
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    @*<script src="~/Scripts/bootstrap.min.js"></script>*@
+}
+
+
