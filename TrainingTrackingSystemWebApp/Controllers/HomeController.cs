@@ -29,31 +29,12 @@ namespace TrainingTrackingSystemWebApp.Controllers
         {
             UsersIndexViewModel viewModel = new UsersIndexViewModel();
 
-            var users = await clientUtils.Get("users", "", "", "LastName", "asc", 1, 10);
+            var users = await clientUtils.Get("users");
 
             viewModel.Users = users;
 
             return View("Index", viewModel);
 
-        }
-
-        [HttpGet]
-        public async Task<JsonResult> findUsers(string searchField, string searchValue, string orderType)
-        {
-            // Call rest service to filter users
-            List<UserViewModel> usersFiltered = new List<UserViewModel>()
-            {
-                new UserViewModel()
-                {
-                    FirstName = "Victor",
-                    LastName = "Leon"
-                }
-            };
-
-            return Json(
-                new { data = usersFiltered },
-                JsonRequestBehavior.AllowGet
-                );
         }
 
         public ActionResult About()
