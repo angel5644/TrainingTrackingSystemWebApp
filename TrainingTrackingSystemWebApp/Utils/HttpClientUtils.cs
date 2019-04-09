@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using TrainingTrackingSystemWebApp.DTOs;
+using TrainingTrackingSystemWebApp.DTO;
 using TrainingTrackingSystemWebApp.ViewModels;
 
 namespace TrainingTrackingSystemWebApp.Utils
@@ -99,6 +99,66 @@ namespace TrainingTrackingSystemWebApp.Utils
 
                 throw new ArgumentException("The request was not in the correct format. Message: " + msg);
             }
+            return null;
+        }
+
+        public async Task<List<UserDTO>> Get(string endPoint, string searchField, string searchValue, string orderBy, string orderType, int pageNo, int numberRec)
+        {
+            // endpoint = users
+            // userId = 1
+            // pageNo = 1
+            // posts?userId=1
+            string url = string.Format("{0}?searchField={1}&searchValue={2}&orderBy={3}&orderType={4}&pageNo={5}&numberRec={6}", endPoint, searchField, searchValue, orderBy, orderType, pageNo, numberRec);
+
+            HttpResponseMessage response = await _client.GetAsync(url);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                // Get data
+                string data = await response.Content.ReadAsStringAsync();
+
+                List<UserDTO> posts = JsonConvert.DeserializeObject<List<UserDTO>>(data);
+
+
+                return posts;
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                throw new ApplicationException("The request was not in the correct format.");
+            }
+
+            return null;
+        }
+
+        //Post?
+        public async Task<UserDTO> Post(string endPoint, UserDTO user)
+        {
+            string url = endPoint;
+
+            string userAsJson = JsonConvert.SerializeObject(user);
+            HttpContent content = new StringContent(userAsJson, UnicodeEncoding.UTF8, "application/json");
+            //GET?
+
+            HttpResponseMessage response = await _client.PostAsync(url, content);
+
+            string data = await response.Content.ReadAsStringAsync();
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+            {
+
+
+                //List
+                UserDTO posts = JsonConvert.DeserializeObject<UserDTO>(data);
+
+                return posts;
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                string msg = data;
+
+                throw new ArgumentException("The request was not in the correct format. Message: " + msg);
+            }
+
             return null;
         }
     }

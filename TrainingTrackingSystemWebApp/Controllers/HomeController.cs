@@ -11,7 +11,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using TrainingTrackingSystemWebApp.DTO;
-using TrainingTrackingSystemWebApp.Models;
 using TrainingTrackingSystemWebApp.Utils;
 using TrainingTrackingSystemWebApp.ViewModels;
 
