@@ -162,5 +162,24 @@ namespace TrainingTrackingSystemWebApp.Utils
 
             return null;
         }
+
+        public async Task<bool> Delete(string endPoint, int id)
+        {
+            // Call post api
+            string url = string.Format("{0}/{1}", endPoint, id);
+            HttpResponseMessage response = await _client.DeleteAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+
+                return true;
+            }
+            else
+            {
+                string contentMsg = await response.Content.ReadAsStringAsync();
+                string msg = "Error while deleting user. Status code: " + response.StatusCode + "Message: " + contentMsg;
+                Console.WriteLine(msg);
+                throw new ApplicationException(msg);
+            }
+        }
     }
 }

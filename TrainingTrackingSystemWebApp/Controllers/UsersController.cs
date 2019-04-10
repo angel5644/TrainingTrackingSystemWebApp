@@ -112,19 +112,25 @@ namespace TrainingTrackingSystemWebApp.Controllers
             else
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //Bad request
         }
-        /*
-        //Create button URL
-        [System.Web.Http.HttpPost]
-        public ActionResult CreateUsr(createUserVM user)
-        {
-            int id = user.Id;
-            String firstName = user.FirstName;
-            String lastName = user.LastName;
-            String email = user.Email;
-            UserType rol = user.Type;
 
-            //List<CreateUserViewModel> lst;
-            return RedirectToAction("Index","Home");
-        }*/
+        [HttpPost]
+        public async Task<JsonResult> Delete(int id)
+        {
+            bool isDeleted = false;
+            string msg = string.Empty;
+
+            try
+            {
+                isDeleted = await clientUtils.Delete("users", id);
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+
+
+            return Json(new { isDeleted = isDeleted, message = msg });
+        }
+
     }
 }

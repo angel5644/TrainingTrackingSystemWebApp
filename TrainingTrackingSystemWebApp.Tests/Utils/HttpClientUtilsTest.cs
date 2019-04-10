@@ -15,7 +15,7 @@ namespace TrainingTrackingSystemWebApp.Tests.Utils
         [TestMethod]
         public void TestSetUp()
         {
-            clientUtils = new HttpClientUtils(baseAddress: "https://my-json-server.typicode.com/angel5644/UsersJsonData/", authorization: false);
+            clientUtils = new HttpClientUtils(baseAddress: "https://my-json-server.typicode.com/angel5644/UsersJsonData/");
         }
 
         [TestCleanup]
@@ -32,7 +32,7 @@ namespace TrainingTrackingSystemWebApp.Tests.Utils
             UserDTO user = new UserDTO();
 
             //Act
-            TestPost result = await clientUtils.Post<TestPost>(endPoint, user);
+            TestPost result = new TestPost();
         
             //Assert
             Assert.IsInstanceOfType(result, typeof(TestPost));
