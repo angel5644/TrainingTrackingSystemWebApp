@@ -135,10 +135,18 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="DTO\CategoryDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\IBaseService.cs" />
+    <Compile Include="Services\ICategoryService.cs" />
+    <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="ViewModels\Categories\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Categories\CreateCategoryViewModel.cs" />
     <Compile Include="ViewModels\createUserVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

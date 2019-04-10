@@ -30,6 +30,19 @@
         </div>
     </div>
     <div class="container body-content">
+        <br />
+        @{
+            string successMessage = TempData["Success"] != null ? (string)TempData["Success"] : string.Empty;
+            string errorMessage = TempData["Error"] != null ? (string)TempData["Error"] : string.Empty;
+        }
+        @if (successMessage != "")
+        {
+            <div class="alert alert-success">@successMessage</div>
+        }
+        @if (errorMessage != "")
+        {
+            <div class="alert alert-danger">@errorMessage</div>
+        }
         @RenderBody()
         <hr />
         <footer>
