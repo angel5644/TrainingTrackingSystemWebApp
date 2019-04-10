@@ -21,5 +21,6 @@ namespace TrainingTrackingSystemWebApp.Utils
         Task<UserDTO> Post(string endPoint, UserDTO user);
         //Task<List<UserDTO>> Get(string endPoint, string searchField, string searchValue, string orderBy, string orderType, int pageNo, int numberRec);
         Task<List<UserDTO>> Get(string endPoint);
+        Task<bool> Delete(string endPoint, int id);
     }
 }
