@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using TrainingTrackingSystemWebApp.DTO;
+using TrainingTrackingSystemWebApp.Services;
 using TrainingTrackingSystemWebApp.Utils;
 using TrainingTrackingSystemWebApp.ViewModels;
 
@@ -13,23 +14,26 @@ namespace TrainingTrackingSystemWebApp.Controllers
     public class UsersController : Controller
     {
 
-        private IHttpClientUtils clientUtils;
+        //private IHttpClientUtils clientUtils;
+        private IUserService _userService;
 
         public UsersController()
         {
-            clientUtils = new HttpClientUtils("https://my-json-server.typicode.com/angel5644/UsersJsonData/");
+            var clientUtils = new HttpClientUtils("https://my-json-server.typicode.com/angel5644/UsersJsonData/");
+
+            _userService = new UserService(clientUtils);
         }
 
-        public UsersController(IHttpClientUtils httpClientUtils)
+        public UsersController(IUserService userService)
         {
-            clientUtils = httpClientUtils;
+            _userService = userService;
         }
 
         public async Task<ActionResult> Index()
         {
             UsersIndexViewModel viewModel = new UsersIndexViewModel();
 
-            var users = await clientUtils.Get("users");
+            var users = await _userService.GetMany("users");
 
             viewModel.Users = users;
 
@@ -61,7 +65,7 @@ namespace TrainingTrackingSystemWebApp.Controllers
 
             try
             {
-                var response = await clientUtils.Post("users", user);
+                var response = await _userService.Post("users", user);
             }
             catch (ArgumentException ex)
             {
@@ -81,7 +85,7 @@ namespace TrainingTrackingSystemWebApp.Controllers
         {
             EditUserViewModel editUserVM = new EditUserViewModel();
 
-            UserDTO userDTO = await clientUtils.GetUser("users", Id);
+            UserDTO userDTO = await _userService.Get("users", Id);
 
             if (userDTO == null)
             {
@@ -121,7 +125,7 @@ namespace TrainingTrackingSystemWebApp.Controllers
 
             try
             {
-                isDeleted = await clientUtils.Delete("users", id);
+                isDeleted = await _userService.Delete("users", id);
             }
             catch (Exception ex)
             {

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/Styles/css")
+    @*@Styles.Render("~/Content/Styles/css")*@
     @RenderSection("styles", required: false)
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -30,6 +30,19 @@
         </div>
     </div>
     <div class="container body-content">
+        <br />
+        @{
+            string successMessage = TempData["Success"] != null ? (string)TempData["Success"] : string.Empty;
+            string errorMessage = TempData["Error"] != null ? (string)TempData["Error"] : string.Empty;
+        }
+        @if (successMessage != "")
+        {
+            <div class="alert alert-success">@successMessage</div>
+        }
+        @if (errorMessage != "")
+        {
+            <div class="alert alert-danger">@errorMessage</div>
+        }
         @RenderBody()
         <hr />
         <footer>

@@ -47,7 +47,7 @@
                     <td>
                         <a href="/Users/Edit/@(user.id)">Update</a> |
                         <a href="/Users/Details/@(user.id)">Details</a> |
-                        <input id="deleteBtn" class="btn-link" type="button" value="delete" data-id="@user.id" />
+                        <input class="btn-link deleteBtn" type="button" value="delete" data-id="@user.id" />
                     </td>
                 </tr>
             }
@@ -77,8 +77,8 @@
             $('#table_id').DataTable();
         });
 
-        $("#deleteBtn").on("click", function (event) {
-            var id = $("#deleteBtn").attr("data-id");
+        $(".deleteBtn").on("click", function (event) {
+            var id = $(this).attr("data-id");
             //var id = 1;
             $.ajax({
                 url: "/Users/Delete/",
