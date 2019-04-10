@@ -109,6 +109,8 @@ namespace TrainingTrackingSystemWebApp.Controllers
 
             // var response = await clientUtils.Put("users", userDTO);
 
+            // complete edit
+
             Console.WriteLine(userJson);
 
             if (Response.StatusCode >= 200 && Response.StatusCode <= 299) //Status ok
