@@ -8,7 +8,8 @@ namespace TrainingTrackingSystemWebApp.ViewModels
 
 {
     public class EditUserViewModel
-    {           [Required]
+    {
+        [Required]
         public int Id { get; set; }
         [Display(Name = "First Name")]
         [Required]

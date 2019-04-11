@@ -2,97 +2,82 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Web.Mvc;
 using TrainingTrackingSystemWebApp.Controllers;
 using TrainingTrackingSystemWebApp.ViewModels;
 using System.Threading.Tasks;
+using TrainingTrackingSystemWebApp.DTO;
+using System.Web.Mvc;
+using TrainingTrackingSystemWebApp.Utils;
+using TrainingTrackingSystemWebApp.Services;
 
 namespace TrainingTrackingSystemWebApp.Tests.Controllers
 {
-    /// <summary>
-    /// Summary description for UserControllerTest
-    /// </summary>
     [TestClass]
     public class UsersControllerTest
     {
-        public UsersControllerTest()
+        HttpClientUtils clientUtils;
+        UsersController UserController = new UsersController();
+        EditUserViewModel user = new EditUserViewModel();
+        UserDTO DTO = new UserDTO();
+
+        [TestInitialize]
+        public void TestSetUp()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            clientUtils = new HttpClientUtils(baseAddress: "https://my-json-server.typicode.com/angel5644/UsersJsonData/");
+            UserService service = new UserService();
         }
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
+        [TestCleanup]
+        public void CleanUp()
         {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+            // Dispose
         }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
         [TestMethod]
-        public void CreateUser()
+        public async Task Should_notReturnNull_whenUserExists()
         {
             //Arrange
-            UsersController controller = new UsersController();
+            int id = 1;
 
             //Act
-            ViewResult result = controller.Create() as ViewResult;
+            ViewResult view = await UserController.Edit(id) as ViewResult;
 
             //Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(view);
+        }   
+
+        [TestMethod]
+        public async Task Shoud_BeNull_WhenFieldsAreIncomplete()
+        {
+            //Arrange
+            user.Id = 1;
+            user.FirstName = "Carlos";
+            user.LastName = "";
+            user.Email = "cm2019@4thsource.com";
+            DTO.type = 1;
+            user.Type = (UserType)DTO.type;
+               
+            //Act
+            ViewResult view = await UserController.Edit(user) as ViewResult;
+
+            //Assert
+            Assert.IsNull(view);
         }
 
         [TestMethod]
-        public async Task Create()
+        public async Task Get()
         {
-            var CreateUserVM = new createUserVM();
             //Arrange
-            UsersController controller = new UsersController();
-
-            //Act
-            var result = await controller.CreateUser(CreateUserVM) as RedirectToRouteResult;
-
-            result.RouteValues["action"].Equals("Index");
-            result.RouteValues["controller"].Equals("Home");
-
-            //Assert
-            Assert.IsNotNull(result, "Not a direct result");
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("Home", result.RouteValues["controller"]);
 
         }
+        //[TestMethod]
+        //public async Task Should_ReturnIndex_WhenUserDoesntExist()
+        //{
+        //    int id = 31;
+
+        //    ViewResult expected = await UserController.Index() as ViewResult;
+        //    ViewResult view = await UserController.Edit(id) as ViewResult;
+
+        //    Assert.AreSame(expected, view);
+        //}
     }
 }
