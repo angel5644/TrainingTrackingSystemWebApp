@@ -13,16 +13,16 @@ namespace TrainingTrackingSystemWebApp.Services
 {
     public class BaseService<T> : IBaseService<T> where T:class
     {
+        private IHttpClientUtils _clientUtils;
+
         public BaseService(IHttpClientUtils clienUtils)
         {
             _clientUtils = clienUtils;
         }
 
-        private IHttpClientUtils _clientUtils;
-
         public async Task<T> Get(string endPoint, int Id) 
         {
-            HttpResponseMessage res = await _clientUtils.Client.GetAsync(endPoint + "/" + Id.ToString());
+            HttpResponseMessage res = await _clientUtils.GetAsync(endPoint + "/" + Id.ToString());
 
             if (res.IsSuccessStatusCode)
             {
@@ -46,7 +46,7 @@ namespace TrainingTrackingSystemWebApp.Services
             string userAsJson = JsonConvert.SerializeObject(dtoObject);
             HttpContent content = new StringContent(userAsJson, UnicodeEncoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await _clientUtils.Client.PutAsync(url, content);
+            HttpResponseMessage response = await _clientUtils.PutAsync(url, content);
 
             string data = await response.Content.ReadAsStringAsync();
 
@@ -80,7 +80,7 @@ namespace TrainingTrackingSystemWebApp.Services
             // posts?userId=1
             //string url = string.Format("{0}?searchField={1}&searchValue={2}&orderBy={3}&orderType={4}&pageNo={5}&numberRec={6}", endPoint, searchField, searchValue, orderBy, orderType, pageNo, numberRec);
 
-            HttpResponseMessage response = await _clientUtils.Client.GetAsync(endPoint);
+            HttpResponseMessage response = await _clientUtils.GetAsync(endPoint);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -107,7 +107,7 @@ namespace TrainingTrackingSystemWebApp.Services
             HttpContent content = new StringContent(userAsJson, UnicodeEncoding.UTF8, "application/json");
             //GET?
 
-            HttpResponseMessage response = await _clientUtils.Client.PostAsync(url, content);
+            HttpResponseMessage response = await _clientUtils.PostAsync(url, content);
 
             string data = await response.Content.ReadAsStringAsync();
 
@@ -131,7 +131,7 @@ namespace TrainingTrackingSystemWebApp.Services
         {
             // Call post api
             string url = string.Format("{0}/{1}", endPoint, id);
-            HttpResponseMessage response = await _clientUtils.Client.DeleteAsync(url);
+            HttpResponseMessage response = await _clientUtils.DeleteAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 return true;

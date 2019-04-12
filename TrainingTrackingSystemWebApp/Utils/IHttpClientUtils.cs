@@ -11,11 +11,16 @@ namespace TrainingTrackingSystemWebApp.Utils
 {
   public interface IHttpClientUtils
     {
-        HttpClient Client { get; }
+        HttpClient Client { get; set; }
         string BaseUrl
         {
             get;
         }
+
+        Task<HttpResponseMessage> GetAsync(string requestUri);
+        Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content);
+        Task<HttpResponseMessage> PutAsync(string requestUri, HttpContent content);
+        Task<HttpResponseMessage> DeleteAsync(string requestUri);
         //Task<UserDTO> GetUser(string endPoint, int Id);
         //Task<UserDTO> Put(string v, UserDTO userDTO);
         //Task<UserDTO> Post(string endPoint, UserDTO user);

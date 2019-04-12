@@ -22,6 +22,11 @@ namespace TrainingTrackingSystemWebApp.Controllers
             _categorySevice = new CategoryService(clientUtils);
         }
 
+        public CategoriesController(ICategoryService categoryService)
+        {
+            _categorySevice = categoryService;
+        }
+
         // GET: Categories
         public async Task<ActionResult> Index()
         {
@@ -90,7 +95,7 @@ namespace TrainingTrackingSystemWebApp.Controllers
                 }
                 else
                 {
-                    TempData["Error"] = "The category already exists. Please try again with another name.";
+                    TempData["Error"] = "This category already exists";
 
                     return View(viewModel);
                 }
