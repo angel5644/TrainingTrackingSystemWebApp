@@ -28,15 +28,15 @@ namespace TrainingTrackingSystemWebApp.Services
         public async Task<bool> Exists(string endPoint, string name)
         {
             // Get all the categories
-            HttpResponseMessage res = await _clientUtils.Client.GetAsync(endPoint);
+            HttpResponseMessage res = await _clientUtils.GetAsync(endPoint);
 
             if (res.IsSuccessStatusCode)
             {
                 string categoriesData = await res.Content.ReadAsStringAsync();
-                
+
                 List<CategoryDTO> categoriesDTO = JsonConvert.DeserializeObject<List<CategoryDTO>>(categoriesData);
 
-                bool exists = categoriesDTO.Any(category => category.Name == name); 
+                bool exists = categoriesDTO.Any(category => category.Name == name);
 
                 return exists;
             }

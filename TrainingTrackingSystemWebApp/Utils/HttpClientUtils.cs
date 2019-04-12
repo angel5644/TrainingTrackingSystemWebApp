@@ -16,7 +16,7 @@ namespace TrainingTrackingSystemWebApp.Utils
 
     public class HttpClientUtils : IHttpClientUtils
     {
-        private HttpClient _client;
+        private HttpClient _client = new HttpClient();
 
         public HttpClient Client
         {
@@ -24,12 +24,10 @@ namespace TrainingTrackingSystemWebApp.Utils
             {
                 return _client;
             }
-            //set { _client = value; }
+            set { _client = value; }
         }
 
         private string _baseUrl;
-        private string baseAddress;
-        private bool authorization;
 
         public string BaseUrl
         {
@@ -51,9 +49,24 @@ namespace TrainingTrackingSystemWebApp.Utils
             _client.DefaultRequestHeaders.Accept.Clear();
         }
 
-        
+        public async Task<HttpResponseMessage> GetAsync(string requestUri)
+        {
+            return await _client.GetAsync(requestUri);
+        }
 
-       
-        
+        public async Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content)
+        {
+            return await _client.PostAsync(requestUri, content);
+        }
+
+        public async Task<HttpResponseMessage> PutAsync(string requestUri, HttpContent content)
+        {
+            return await _client.PutAsync(requestUri, content);
+        }
+
+        public async Task<HttpResponseMessage> DeleteAsync(string requestUri)
+        {
+            return await _client.DeleteAsync(requestUri);
+        }
     }
 }
