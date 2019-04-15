@@ -2,43 +2,48 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Web.Mvc;
 using TrainingTrackingSystemWebApp.Controllers;
 using TrainingTrackingSystemWebApp.ViewModels;
 using System.Threading.Tasks;
+using TrainingTrackingSystemWebApp.DTO;
+using System.Web.Mvc;
+using TrainingTrackingSystemWebApp.Utils;
+using TrainingTrackingSystemWebApp.Services;
 
 namespace TrainingTrackingSystemWebApp.Tests.Controllers
 {
-    /// <summary>
-    /// Summary description for UserControllerTest
-    /// </summary>
     [TestClass]
     public class UsersControllerTest
     {
-        public UsersControllerTest()
+        HttpClientUtils clientUtils;
+        UsersController UserController = new UsersController();
+        EditUserViewModel user = new EditUserViewModel();
+        UserDTO DTO = new UserDTO();
+
+        [TestInitialize]
+        public void TestSetUp()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            clientUtils = new HttpClientUtils(baseAddress: "https://my-json-server.typicode.com/angel5644/UsersJsonData/");
+            UserService service = new UserService();
         }
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
+        [TestCleanup]
+        public void CleanUp()
         {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+            // Dispose
         }
+        [TestMethod]
+        public async Task Should_notReturnNull_whenUserExists()
+        {
+            //Arrange
+            int id = 1;
+
+            //Act
+            ViewResult view = await UserController.Edit(id) as ViewResult;
+
+            //Assert
+            Assert.IsNotNull(view);
+        }   
 
         #region Additional test attributes
         //
@@ -61,38 +66,53 @@ namespace TrainingTrackingSystemWebApp.Tests.Controllers
         // public void MyTestCleanup() { }
         //
         #endregion
+        
+        [TestMethod]
+        public async Task Index()
+        {
+            // Arrange
+            UsersController controller = new UsersController();
+
+            // Act
+            ViewResult result = await controller.Index() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
 
         [TestMethod]
         public void CreateUser()
         {
             //Arrange
-            UsersController controller = new UsersController();
-
+            user.Id = 1;
+            user.FirstName = "Carlos";
+            user.LastName = "";
+            user.Email = "cm2019@4thsource.com";
+            DTO.type = 1;
+            user.Type = (UserType)DTO.type;
+               
             //Act
-            ViewResult result = controller.Create() as ViewResult;
+            ViewResult view = await UserController.Edit(user) as ViewResult;
 
             //Assert
-            Assert.IsNotNull(result);
+            Assert.IsNull(view);
         }
 
         [TestMethod]
-        public async Task Create()
+        public async Task Get()
         {
-            var CreateUserVM = new createUserVM();
             //Arrange
-            UsersController controller = new UsersController();
-
-            //Act
-            var result = await controller.CreateUser(CreateUserVM) as RedirectToRouteResult;
-
-            result.RouteValues["action"].Equals("Index");
-            result.RouteValues["controller"].Equals("Home");
-
-            //Assert
-            Assert.IsNotNull(result, "Not a direct result");
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("Home", result.RouteValues["controller"]);
 
         }
+        //[TestMethod]
+        //public async Task Should_ReturnIndex_WhenUserDoesntExist()
+        //{
+        //    int id = 31;
+
+        //    ViewResult expected = await UserController.Index() as ViewResult;
+        //    ViewResult view = await UserController.Edit(id) as ViewResult;
+
+        //    Assert.AreSame(expected, view);
+        //}
     }
 }

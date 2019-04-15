@@ -26,7 +26,6 @@ namespace TrainingTrackingSystemWebApp.Services
 
             if (res.IsSuccessStatusCode)
             {
-                //EditUserViewModel editUserVM = new EditUserViewModel();
                 string data = await res.Content.ReadAsStringAsync();
 
                 T userDto = JsonConvert.DeserializeObject<T>(data);

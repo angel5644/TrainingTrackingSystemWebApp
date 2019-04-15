@@ -14,8 +14,6 @@ namespace TrainingTrackingSystemWebApp.Services
         public UserService(IHttpClientUtils clientUtils) : base(clientUtils)
         {
 
-        }
-
-        
+        }        
     }
 }
