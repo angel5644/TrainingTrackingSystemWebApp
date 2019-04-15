@@ -46,12 +46,10 @@ namespace TrainingTrackingSystemWebApp.Controllers
             return View();
         }
 
-
         //List
         [HttpPost]
         public async Task<ActionResult> CreateUser(createUserVM viewModel)
         {
-            //createUserVM viewModel = new createUserVM();
             UserDTO user = new UserDTO();
 
             user.first_name = viewModel.FirstName;
@@ -59,10 +57,7 @@ namespace TrainingTrackingSystemWebApp.Controllers
             user.id = viewModel.Id;
             user.last_name = viewModel.LastName;
             user.type = (int)viewModel.Type;
-
-            //userId?
             
-
             try
             {
                 var response = await _userService.Post("users", user);
@@ -90,7 +85,7 @@ namespace TrainingTrackingSystemWebApp.Controllers
             if (userDTO == null)
             {
                 TempData["Message"] = "The user does not exist";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Users");
             }
 
             editUserVM.Id = userDTO.id;
@@ -105,20 +100,32 @@ namespace TrainingTrackingSystemWebApp.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(EditUserViewModel user)
         {
+            UserDTO DTO = new UserDTO();
             string userJson = JsonConvert.SerializeObject(user);
 
-            // var response = await clientUtils.Put("users", userDTO);
-
-            // complete edit
+            DTO.id = user.Id;
+            DTO.first_name = user.FirstName;
+            DTO.last_name = user.LastName;
+            DTO.email = user.Email;
+            DTO.type = Convert.ToInt32(user.Type);
 
             Console.WriteLine(userJson);
+            try
+            {
+                var response = await _userService.Put("users", DTO);
+            }
+            catch (ArgumentException ex)
+            {
+                // In case of an error, return to the currrent view where the user is being created 
+                ViewBag.ErrorMessage = ex.Message;
 
-            if (Response.StatusCode >= 200 && Response.StatusCode <= 299) //Status ok
-                return View();
-            else
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //Bad request
-        }
-
+                return View(user);
+            }
+            // In case of success, redirect to the users index page
+            TempData["Success"] = "The user with the ID # " + DTO.id + " was edited";
+            return RedirectToAction("Index");
+        }     
+ 
         [HttpPost]
         public async Task<JsonResult> Delete(int id)
         {
@@ -133,7 +140,6 @@ namespace TrainingTrackingSystemWebApp.Controllers
             {
                 msg = ex.Message;
             }
-
 
             return Json(new { isDeleted = isDeleted, message = msg });
         }
