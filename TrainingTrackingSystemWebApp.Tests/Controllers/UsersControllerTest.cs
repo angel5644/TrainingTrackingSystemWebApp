@@ -61,6 +61,19 @@ namespace TrainingTrackingSystemWebApp.Tests.Controllers
         // public void MyTestCleanup() { }
         //
         #endregion
+        
+        [TestMethod]
+        public async Task Index()
+        {
+            // Arrange
+            UsersController controller = new UsersController();
+
+            // Act
+            ViewResult result = await controller.Index() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
 
         [TestMethod]
         public void CreateUser()

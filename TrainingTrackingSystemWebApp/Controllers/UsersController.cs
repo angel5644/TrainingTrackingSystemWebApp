@@ -138,5 +138,20 @@ namespace TrainingTrackingSystemWebApp.Controllers
             return Json(new { isDeleted = isDeleted, message = msg });
         }
 
+        [HttpGet]
+        public async Task <ActionResult> Details(int id)
+        {
+            DetailsViewModel detailsUserVM = new DetailsViewModel();
+
+            UserDTO userDTO = await _userService.Get("users", id);
+
+            detailsUserVM.first_name = userDTO.first_name;
+            detailsUserVM.last_name = userDTO.last_name;
+            detailsUserVM.email = userDTO.email;
+            detailsUserVM.type = userDTO.type;
+
+            return View("Details", detailsUserVM);
+        }
+
     }
 }

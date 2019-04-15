@@ -1,0 +1,32 @@
+﻿@model TrainingTrackingSystemWebApp.ViewModels.DetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+@using (Html.BeginForm())
+{
+    <h3>DetailsUser</h3>
+    <hr />
+    <div class="form-group">
+        <label for="Name">First Name </label>
+        @Html.TextBoxFor(model => model.first_name, new  { @class = "form-control", @readonly = true } )
+    </div>
+
+    <div class="form-group">
+       <label for="LastName">Last Name </label>
+        @Html.TextBoxFor(model => model.last_name, new  { @class = "form-control", @readonly = true } )
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email </label>
+        @Html.TextBoxFor(model => model.email, new { @class = "form-control", @readonly = true } )     
+    </div>
+
+    <div class="form-group">
+        <label for="Type">Type </label>
+        @Html.TextBoxFor(model => model.type, new  { @class = "form-control", @readonly = true } )       
+    </div>
+}
