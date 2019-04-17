@@ -9,6 +9,6 @@ namespace TrainingTrackingSystemWebApp.Services
 {
     public interface IUserService : IBaseService<UserDTO>
     {
-
+        
     }
 }

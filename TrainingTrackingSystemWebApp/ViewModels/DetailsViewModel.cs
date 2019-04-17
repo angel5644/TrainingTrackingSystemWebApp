@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -8,20 +9,20 @@ namespace TrainingTrackingSystemWebApp.ViewModels
 {
     public class DetailsViewModel
     {
-        [Editable(false)]
+        [ReadOnly(true)]
         public int id { get; set; }
 
-        [Editable(false)]
-        public string first_name { get;  set; }
+        [ReadOnly(true)]
+        public string first_name { get; set; }
 
-        [Editable(false)]
+        [ReadOnly(true)]
         public string last_name { get; set; }
 
-        [Editable(false)]
-        public string email { get;  set; }
+        [ReadOnly(true)]
+        public string email { get; set; }
 
-        [Editable(false)]
-        public int type { get;  set; }
+        [ReadOnly(true)]
+        public int type { get; set; }
 
     }
 }

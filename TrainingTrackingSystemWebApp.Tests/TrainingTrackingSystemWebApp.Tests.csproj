@@ -103,9 +103,8 @@
     <Compile Include="Controllers\UsersControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
-    <Compile Include="ServicesTest\BaseServiceTest.cs" />
     <Compile Include="Services\CategoryServiceTests.cs" />
-    <Compile Include="Utils\HttpClientUtilsTest.cs" />
+    <Compile Include="Services\BaseServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

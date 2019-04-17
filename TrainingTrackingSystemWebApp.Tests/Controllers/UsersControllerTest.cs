@@ -7,24 +7,31 @@ using TrainingTrackingSystemWebApp.ViewModels;
 using System.Threading.Tasks;
 using TrainingTrackingSystemWebApp.DTO;
 using System.Web.Mvc;
+using Moq;
 using TrainingTrackingSystemWebApp.Utils;
 using TrainingTrackingSystemWebApp.Services;
+using Newtonsoft.Json;
+using System.Net.Http;
+using TrainingTrackingSystemWebApp.ViewModels.Categories;
 
 namespace TrainingTrackingSystemWebApp.Tests.Controllers
 {
     [TestClass]
     public class UsersControllerTest
     {
-        HttpClientUtils clientUtils;
-        UsersController UserController = new UsersController();
-        EditUserViewModel user = new EditUserViewModel();
-        UserDTO DTO = new UserDTO();
+        private UsersController controller;
+
+        private Mock<IUserService> mockUserService;
+
 
         [TestInitialize]
         public void TestSetUp()
         {
-            clientUtils = new HttpClientUtils(baseAddress: "https://my-json-server.typicode.com/angel5644/UsersJsonData/");
-            UserService service = new UserService();
+            mockUserService = new Mock<IUserService>();
+
+            controller = new UsersController(mockUserService.Object);
+
+            controller.TempData = new TempDataDictionary();
         }
 
         [TestCleanup]
@@ -32,18 +39,6 @@ namespace TrainingTrackingSystemWebApp.Tests.Controllers
         {
             // Dispose
         }
-        [TestMethod]
-        public async Task Should_notReturnNull_whenUserExists()
-        {
-            //Arrange
-            int id = 1;
-
-            //Act
-            ViewResult view = await UserController.Edit(id) as ViewResult;
-
-            //Assert
-            Assert.IsNotNull(view);
-        }   
 
         #region Additional test attributes
         //
@@ -66,9 +61,24 @@ namespace TrainingTrackingSystemWebApp.Tests.Controllers
         // public void MyTestCleanup() { }
         //
         #endregion
-        
+
         [TestMethod]
-        public async Task Index()
+        public async Task Index_Should_ReturnIndexView()
+        {
+            // Arrange           
+            string expected = "Index"; // name of the view expected
+
+            // Act
+            ActionResult actionResult = await controller.Index();
+
+            ViewResult result = actionResult as ViewResult;
+
+            // Assert
+            Assert.IsTrue(result.ViewName == expected || result.ViewName == string.Empty);
+        }
+
+        [TestMethod]
+        public async Task Index_Should_ReturnNotNull()
         {
             // Arrange
             UsersController controller = new UsersController();
@@ -81,29 +91,118 @@ namespace TrainingTrackingSystemWebApp.Tests.Controllers
         }
 
         [TestMethod]
-        public void CreateUser()
+        public async Task Index_Should_ReturnViewResultType()
         {
-            //Arrange
-            user.Id = 1;
-            user.FirstName = "Carlos";
-            user.LastName = "";
-            user.Email = "cm2019@4thsource.com";
-            DTO.type = 1;
-            user.Type = (UserType)DTO.type;
-               
-            //Act
-            ViewResult view = await UserController.Edit(user) as ViewResult;
+            // Arrange          
+            ActionResult actionResult = await controller.Index();
 
-            //Assert
-            Assert.IsNull(view);
+            // Act
+            ViewResult result = actionResult as ViewResult;
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
         [TestMethod]
-        public async Task Get()
+        public async Task Details_Should_ReturnNotNull()
         {
-            //Arrange
+            // Arrange
+            UsersController controller = new UsersController();
+
+            int id = 1;
+
+            // Act
+            ViewResult result = await controller.Details(id) as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public async Task Details_Should_ReturnDetailsView()
+        {
+            // Arrange
+            UsersController controller = new UsersController();
+
+            string expected = "Details";
+
+            int id = 1;
+
+            // Act
+            ActionResult actionResult = await controller.Details(id);
+
+            ViewResult result = actionResult as ViewResult;
+
+            // Assert
+            Assert.IsTrue(result.ViewName == expected || result.ViewName == string.Empty);
+        }
+
+        [TestMethod]
+        public async Task Details_Should_Return()
+        {
+            mockUserService.Setup(service => service.Get(It.Is<string>(endpoint => endpoint == "users"), It.Is<int>(ids => ids == 5)))
+               .Returns(Task.FromResult((UserDTO)null));
+
+            // Arrange
+            DetailsViewModel viewModel = new DetailsViewModel()
+            {
+                id = 5,
+                first_name = "Luis",
+                last_name = "Flores",
+                email = "luisflores@gmail.com",
+                type = 1
+            };
+
+            //UsersController controller = new UsersController();
+
+            int id = 5;
+
+            // Act
+            ActionResult actionResult = await controller.Details(viewModel.id);
+
+            ViewResult result = actionResult as ViewResult;
+            DetailsViewModel resultVM = result.Model as DetailsViewModel;
+            //ActionResult actionResult = await controller.Details(viewModel.id);
+            //ViewResult result = actionResult as ViewResult;
+
+            // Assert
+            //Assert.AreEqual(expected, result);
+            Assert.AreEqual(resultVM.id, id);
 
         }
+
+        //[TestMethod]
+        //public async Task Should_notReturnNull_whenUserExists()
+        //{
+        //    //Arrange
+        //    int id = 1;
+
+        //    //Act
+        //    ViewResult view = await UserController.Edit(id) as ViewResult;
+
+        //    //Assert
+        //    Assert.IsNotNull(view);
+        //}   
+
+
+        //[TestMethod]
+        //public void CreateUser()
+        //{
+        //    //Arrange
+        //    user.Id = 1;
+        //    user.FirstName = "Carlos";
+        //    user.LastName = "";
+        //    user.Email = "cm2019@4thsource.com";
+        //    DTO.type = 1;
+        //    user.Type = (UserType)DTO.type;
+
+        //    //Act
+        //    ViewResult view = await UserController.Edit(user) as ViewResult;
+
+        //    //Assert
+        //    Assert.IsNull(view);
+        //}
+
         //[TestMethod]
         //public async Task Should_ReturnIndex_WhenUserDoesntExist()
         //{
